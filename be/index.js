@@ -5,15 +5,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const user = [{ id: 1, name: "Bill" }, {}];
+const user = [{ id: 1, name: "Bill" }];
 
 app.get("/user", (request, response) => {
-  response.json("Hello Bilguundul");
+  response.json(user);
 });
 app.post("/user", (request, response) => {
-  console.log(request.body);
+  // console.log(request.body, "be iinh umshu");
+  user.push(request.body);
   // arr.push({ name: "hello", id: 2 });
-  response.send("name");
+  console.log(user);
+  response.send(user);
 });
 app.patch("/", (request, response) => {
   arr.push([

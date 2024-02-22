@@ -5,24 +5,26 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [name, setName] = useState({ name: "hel" });
+  const [form, setForm] = useState("");
+  const [data, setData] = useState([]);
   // console.log(name);
   const createData = async () => {
-    await fetch("http://localhost:3000/user", {
+    const response = await fetch("http://localhost:3000/user", {
       method: "POST",
-      cache: "no-cache",
-      credentials: "same-origin", // include, *same-origin, omit
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ a: 7, str: "hello" }),
-    });
+      body: JSON.stringify(form),
+    }).then((response) => response.json());
+    setData(response);
   };
   const addData = () => {
-    console.log(name);
     createData();
   };
+  // const fetchData = async () => {
+  //   await fetch('http://localhost:3000/user').then(())
+  // };
   // useEffect(() => {
   //   fetchData();
   // }, []);
@@ -30,9 +32,19 @@ export default function Home() {
     <div>
       <p>Heloo</p>
       <input
-        onChange={(event) => setName({ name: event.target.value })}
+        onChange={(event) => setForm({ name: event.target.value })}
+        placeholder="Ner"
       ></input>
+      {/* <input
+        onChange={(event) => setForm([...form, { age: event.target.value }])}
+        placeholder="Nas"
+      ></input> */}
       <button onClick={addData}>submit</button>
+      <ul>
+        {data?.map((element) => (
+          <li>{element.name}</li>
+        ))}
+      </ul>
       {/* input - UserName */}
       {/* input - nas  */}
     </div>
